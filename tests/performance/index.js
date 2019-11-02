@@ -80,6 +80,10 @@ if (startNow) {
       'pouchdb-find'));
   }
   if (!process.browser) {
+    // the two strings are to fool Browserify, because this test
+    // fails in Node 0.11-0.12 due to sqlite3 being incompatible
+    PouchDB.plugin(require('../../packages/node_modules/' +
+      'pouchdb-adapter-node-websql'));
     PouchDB.plugin(require('../../packages/node_modules/' +
       'pouchdb-adapter-memory'));
   }

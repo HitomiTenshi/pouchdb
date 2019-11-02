@@ -39,6 +39,9 @@ env:
   matrix:
   - CLIENT=node COMMAND=test
 
+  # Test WebSQL in Node (using node-websql)
+  - CLIENT=node ADAPTER=websql COMMAND=test
+
   # Test in-memory in Node
   - CLIENT=node ADAPTER=memory COMMAND=test
 
@@ -85,7 +88,8 @@ env:
   - SKIP_MIGRATION=true CLIENT=saucelabs:iphone:11.2 COMMAND=test
   - CLIENT="saucelabs:Android:6.0:Linux" COMMAND=test
 
-  # Test memory
+  # Test memory / fruitdown etc
+  - CLIENT="saucelabs:iphone:8.4:OS X 10.11" ADAPTERS=fruitdown COMMAND=test
   - CLIENT=selenium:firefox ADAPTERS=memory COMMAND=test
 
   # Test Webpack bundle
@@ -129,6 +133,10 @@ matrix:
     - env: TYPE=mapreduce CLIENT=selenium:chrome CHROME_BIN=/usr/bin/chromium-browser COMMAND=test
     - env: TYPE=find PLUGINS=pouchdb-find CLIENT=selenium:chrome CHROME_BIN=/usr/bin/chromium-browser SERVER=pouchdb-server COMMAND=test
     - env: CLIENT="saucelabs:Android:6.0:Linux" COMMAND=test
+    # localdown and fruitdown adapters broken by level upgrade @
+    # https://github.com/pouchdb/pouchdb/pull/6941#issuecomment-352166744
+    - env: CLIENT="saucelabs:iphone:8.4:OS X 10.11" ADAPTERS=fruitdown COMMAND=test
+    - env: CLIENT=selenium:firefox ADAPTERS=localstorage COMMAND=test
 
 branches:
   only:
